@@ -2,18 +2,39 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useAuth } from '@/hooks/useAuth';
+import { ROUTES } from '@/utils/constants';
+import { AxiosError } from 'axios';
+import type { ApiError } from '@/types';
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
+  const { login } = useAuth();
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login:', { username, password });
-    // TODO: Implémenter la logique de connexion
-    // Redirection temporaire vers le dashboard
-    navigate('/dashboard');
+    setError('');
+    setIsLoading(true);
+
+    try {
+      await login({ email, password });
+      navigate(ROUTES.DASHBOARD);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        const apiError = err.response?.data as ApiError;
+        setError(apiError?.message || 'Erreur de connexion');
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Une erreur est survenue');
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -30,15 +51,24 @@ export default function LoginPage() {
         {/* Formulaire de connexion - Gauche */}
         <div className="flex-1 flex flex-col gap-8">
           <form onSubmit={handleSubmit} className="space-y-8">
-            {/* Input Nom d'utilisateur */}
+            {/* Message d'erreur */}
+            {error && (
+              <div className="max-w-md p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                {error}
+              </div>
+            )}
+
+            {/* Input Email */}
             <div className="relative w-full max-w-md">
               <Input
-                id="username"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-transparent border-0 border-b border-gray-500 rounded-none focus-visible:ring-0 focus-visible:border-gray-800 px-0 pb-2 text-gray-800 placeholder:text-gray-500"
-                placeholder="Nom d'utilisateur"
+                placeholder="Email"
+                required
+                disabled={isLoading}
               />
             </div>
 
@@ -51,6 +81,8 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-transparent border-0 border-b border-gray-500 rounded-none focus-visible:ring-0 focus-visible:border-gray-800 px-0 pb-2 text-gray-800 placeholder:text-gray-500"
                 placeholder="Mot de passe"
+                required
+                disabled={isLoading}
               />
             </div>
 
@@ -58,9 +90,10 @@ export default function LoginPage() {
             <div className="pt-4 flex justify-end max-w-md">
               <Button
                 type="submit"
-                className="bg-[#3D3E54] hover:bg-[#2E2F45] text-white px-12 py-5 rounded-md text-base"
+                className="bg-[#3D3E54] hover:bg-[#2E2F45] text-white px-12 py-5 rounded-md text-base disabled:opacity-50"
+                disabled={isLoading}
               >
-                Se connecter
+                {isLoading ? 'Connexion...' : 'Se connecter'}
               </Button>
             </div>
           </form>
