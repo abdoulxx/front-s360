@@ -7,7 +7,7 @@ export default function DashboardLayout() {
 
   // Determine title based on route
   const getTitle = () => {
-    if (location.pathname === '/dashboard') return 'Documents';
+    if (location.pathname === '/dashboard') return 'Accueil';
     return 'Dashboard';
   };
 

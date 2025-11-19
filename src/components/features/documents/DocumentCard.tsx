@@ -1,63 +1,35 @@
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { FileText, MoreVertical } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-
 interface DocumentCardProps {
   title: string;
   description: string;
-  date: string;
-  color: 'dark' | 'purple';
-  icon?: React.ReactNode;
+  icon: React.ReactNode;
+  iconColor?: string;
+  onClick?: () => void;
 }
-
-const colorMap = {
-  dark: 'bg-[#2c2c2c]',
-  purple: 'bg-[#5c55b1]',
-};
 
 export function DocumentCard({
   title,
   description,
-  date,
-  color,
   icon,
+  iconColor = '#FF6B35',
+  onClick,
 }: DocumentCardProps) {
   return (
-    <Card
-      className={`${colorMap[color]} text-white border-0 hover:bg-white hover:text-gray-800 transition-all duration-300 cursor-pointer group`}
+    <div
+      onClick={onClick}
+      className="w-[439px] h-[194px] rounded-xl p-6 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg bg-black/35"
     >
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3">
-            {icon || <FileText className="w-8 h-8" />}
-            <h3 className="text-lg font-semibold">{title}</h3>
-          </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-white group-hover:text-gray-800 hover:bg-gray-100/20 h-8 w-8"
-          >
-            <MoreVertical className="w-4 h-4" />
-          </Button>
-        </div>
-      </CardHeader>
-
-      <CardContent className="pb-4">
-        <p className="text-sm text-white/90 group-hover:text-gray-600 leading-relaxed line-clamp-3">
-          {description}
-        </p>
-      </CardContent>
-
-      <CardFooter className="pt-4 border-t border-white/20 group-hover:border-gray-300 flex items-center justify-between">
-        <span className="text-sm text-white/80 group-hover:text-gray-600">{date}</span>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="text-white group-hover:text-gray-800 hover:bg-gray-100/20 font-medium"
+      <div className="flex items-start gap-4 h-full">
+        <div
+          className="flex-shrink-0 w-[70px] h-[70px] rounded-full flex items-center justify-center"
+          style={{ backgroundColor: iconColor, color: 'white' }}
         >
-          voir
-        </Button>
-      </CardFooter>
-    </Card>
+          {icon}
+        </div>
+        <div className="flex-1">
+          <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
+          <p className="text-base text-white/80 leading-relaxed">{description}</p>
+        </div>
+      </div>
+    </div>
   );
 }

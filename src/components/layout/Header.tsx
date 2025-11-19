@@ -1,40 +1,22 @@
-import { Search, Power } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { Power, Home } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 interface HeaderProps {
   title?: string;
+  icon?: React.ReactNode;
 }
 
-export function Header({ title = 'Documents' }: HeaderProps) {
+export function Header({ title = 'Accueil', icon }: HeaderProps) {
   const handleLogout = () => {
     console.log('Logout');
     // TODO: Implémenter la logique de déconnexion
   };
 
-  // Placeholder dynamique selon la page
-  const getSearchPlaceholder = () => {
-    if (title === 'Administrateur') return 'Rechercher un utilisateur';
-    return 'Rechercher un document';
-  };
-
   return (
     <header className="h-[100px] bg-white border-b border-gray-200 flex items-center px-8 gap-8">
-      {/* Barre de recherche */}
-      <div className="flex-1 max-w-md">
-        <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white" />
-          <Input
-            type="text"
-            placeholder={getSearchPlaceholder()}
-            className="w-full pl-12 pr-4 py-6 bg-[#8B5CF6] text-white placeholder:text-white/70 border-0 rounded-full focus-visible:ring-2 focus-visible:ring-[#8B5CF6]/50"
-            style={{ backgroundColor: '#8B5CF6' }}
-          />
-        </div>
-      </div>
-
-      {/* Title */}
-      <div className="flex-1">
+      {/* Page indicator */}
+      <div className="flex-1 flex items-center gap-3">
+        {icon || <Home className="w-6 h-6 text-[#8B5CF6]" />}
         <h1 className="text-2xl font-semibold text-gray-800">{title}</h1>
       </div>
 

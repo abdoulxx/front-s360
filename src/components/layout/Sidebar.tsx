@@ -1,14 +1,13 @@
 import { Link, useLocation } from 'react-router-dom';
 import {
   Home,
+  LayoutGrid,
+  AlertTriangle,
   FileText,
-  Package,
-  ClipboardList,
-  FileSpreadsheet,
-  Receipt,
-  Car,
-  Database,
   BarChart3,
+  Bot,
+  FileSearch,
+  IdCard,
   Settings,
   User,
 } from 'lucide-react';
@@ -17,49 +16,44 @@ import { cn } from '@/lib/utils';
 // Menu items configuration
 const menuItems = [
   {
-    label: 'Accueil',
+    label: 'ACCUEIL',
     icon: Home,
     href: '/dashboard',
   },
   {
-    label: 'Gestion RFCV',
+    label: 'CONTROLE S360°',
+    icon: LayoutGrid,
+    href: '/dashboard/controle',
+  },
+  {
+    label: 'ALERTES',
+    icon: AlertTriangle,
+    href: '/dashboard/alertes',
+  },
+  {
+    label: 'DOCUMENTS',
     icon: FileText,
-    href: '/dashboard/rfcv',
-  },
-  {
-    label: 'Gestion FDI',
-    icon: FileText,
-    href: '/dashboard/fdi',
-  },
-  {
-    label: 'Gestion Manifeste',
-    icon: Package,
-    href: '/dashboard/manifeste',
-  },
-  {
-    label: 'Gestion Déclaration',
-    icon: ClipboardList,
-    href: '/dashboard/declaration',
-  },
-  {
-    label: 'Gestion Bon Provisoire',
-    icon: Receipt,
-    href: '/dashboard/bon-provisoire',
-  },
-  {
-    label: 'Gestion Sydam Auto',
-    icon: Car,
-    href: '/dashboard/sydam-auto',
-  },
-  {
-    label: 'Gestion Données Banque',
-    icon: Database,
-    href: '/dashboard/donnees-banque',
+    href: '/dashboard/documents',
   },
   {
     label: 'KPI - Dashboard',
     icon: BarChart3,
     href: '/dashboard/kpi',
+  },
+  {
+    label: 'CHAT BOT',
+    icon: Bot,
+    href: '/dashboard/chatbot',
+  },
+  {
+    label: 'Investigation',
+    icon: FileSearch,
+    href: '/dashboard/investigation',
+  },
+  {
+    label: 'Profil operateur',
+    icon: IdCard,
+    href: '/dashboard/profil-operateur',
   },
 ];
 
