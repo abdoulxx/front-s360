@@ -10,8 +10,11 @@ import {
   IdCard,
   Settings,
   User,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useSidebar } from '@/contexts/SidebarContext';
 
 // Menu items configuration
 const menuItems = [
@@ -60,14 +63,32 @@ const menuItems = [
 export function Sidebar() {
   const location = useLocation();
   const pathname = location.pathname;
+  const { isCollapsed, toggleSidebar } = useSidebar();
 
   return (
-    <div className="flex flex-col h-screen w-[240px] bg-[#3D3E54] text-white fixed left-0 top-0">
-      {/* Logo */}
-      <div className="p-6 pb-8 flex items-center justify-center">
-        <div className="text-3xl font-bold" style={{ color: '#FF6B35' }}>
-          S360°
-        </div>
+    <div
+      className={cn(
+        'flex flex-col h-screen bg-[#3D3E54] text-white fixed left-0 top-0 transition-all duration-300',
+        isCollapsed ? 'w-[80px]' : 'w-[240px]'
+      )}
+    >
+      {/* Logo and Toggle Button */}
+      <div className="p-6 pb-8 flex items-center justify-center gap-3">
+        {!isCollapsed && (
+          <div className="text-3xl font-bold" style={{ color: '#FF6B35' }}>
+            S360°
+          </div>
+        )}
+        <button
+          onClick={toggleSidebar}
+          className="bg-[#FF6B35] text-white rounded-full p-1.5 hover:bg-[#e55a2a] transition-colors flex-shrink-0"
+        >
+          {isCollapsed ? (
+            <ChevronRight className="w-5 h-5" />
+          ) : (
+            <ChevronLeft className="w-5 h-5" />
+          )}
+        </button>
       </div>
 
       {/* Separator */}
@@ -85,14 +106,16 @@ export function Sidebar() {
                 <Link
                   to={item.href}
                   className={cn(
-                    'flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors',
+                    'flex items-center gap-3 rounded-lg text-sm font-medium transition-colors',
+                    isCollapsed ? 'px-3 py-3 justify-center' : 'px-4 py-3',
                     isActive
                       ? 'bg-white text-[#3D3E54]'
                       : 'text-white hover:bg-[#4A4B61]'
                   )}
+                  title={isCollapsed ? item.label : undefined}
                 >
                   <Icon className="w-5 h-5 flex-shrink-0" />
-                  <span>{item.label}</span>
+                  {!isCollapsed && <span>{item.label}</span>}
                 </Link>
               </li>
             );
@@ -108,14 +131,16 @@ export function Sidebar() {
         <Link
           to="/dashboard/settings"
           className={cn(
-            'flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors',
+            'flex items-center gap-3 rounded-lg text-sm font-medium transition-colors',
+            isCollapsed ? 'px-3 py-3 justify-center' : 'px-4 py-3',
             pathname === '/dashboard/settings'
               ? 'bg-white text-[#3D3E54]'
               : 'text-white hover:bg-[#4A4B61]'
           )}
+          title={isCollapsed ? 'Paramètres' : undefined}
         >
           <Settings className="w-5 h-5 flex-shrink-0" />
-          <span>Paramètres</span>
+          {!isCollapsed && <span>Paramètres</span>}
         </Link>
       </div>
 
@@ -124,14 +149,16 @@ export function Sidebar() {
         <Link
           to="/dashboard/administrateur"
           className={cn(
-            'flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors',
+            'flex items-center gap-3 rounded-lg text-sm font-medium transition-colors',
+            isCollapsed ? 'px-3 py-3 justify-center' : 'px-4 py-3',
             pathname === '/dashboard/administrateur'
               ? 'bg-white text-[#3D3E54]'
               : 'text-white hover:bg-[#4A4B61]'
           )}
+          title={isCollapsed ? 'Administrateur' : undefined}
         >
           <User className="w-5 h-5 flex-shrink-0" />
-          <span>Administrateur</span>
+          {!isCollapsed && <span>Administrateur</span>}
         </Link>
       </div>
     </div>

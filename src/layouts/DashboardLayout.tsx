@@ -1,9 +1,12 @@
 import { useLocation, Outlet } from 'react-router-dom';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { Header } from '@/components/layout/Header';
+import { SidebarProvider, useSidebar } from '@/contexts/SidebarContext';
+import { cn } from '@/lib/utils';
 
-export default function DashboardLayout() {
+function DashboardContent() {
   const location = useLocation();
+  const { isCollapsed } = useSidebar();
 
   // Determine title based on route
   const getTitle = () => {
@@ -12,20 +15,33 @@ export default function DashboardLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-[#413d6b]">
+    <div className="min-h-screen bg-gradient-to-b from-[#403C6A] to-[#645BD4]">
       {/* Sidebar */}
       <Sidebar />
 
       {/* Main Content Area */}
-      <div className="ml-[240px] min-h-screen flex flex-col">
+      <div
+        className={cn(
+          'min-h-screen flex flex-col transition-all duration-300',
+          isCollapsed ? 'ml-[80px]' : 'ml-[240px]'
+        )}
+      >
         {/* Header */}
         <Header title={getTitle()} />
 
         {/* Page Content */}
-        <main className="flex-1 p-8 bg-[#413d6b]">
+        <main className="flex-1 p-8">
           <Outlet />
         </main>
       </div>
     </div>
+  );
+}
+
+export default function DashboardLayout() {
+  return (
+    <SidebarProvider>
+      <DashboardContent />
+    </SidebarProvider>
   );
 }

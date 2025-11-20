@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/hooks/useAuth';
@@ -22,15 +23,20 @@ export default function LoginPage() {
 
     try {
       await login({ email, password });
+      toast.success('Connexion réussie !');
       navigate(ROUTES.DASHBOARD);
     } catch (err) {
       if (err instanceof AxiosError) {
         const apiError = err.response?.data as ApiError;
-        setError(apiError?.message || 'Erreur de connexion');
+        const errorMessage = apiError?.message || 'Erreur de connexion';
+        setError(errorMessage);
+        toast.error(errorMessage);
       } else if (err instanceof Error) {
         setError(err.message);
+        toast.error(err.message);
       } else {
         setError('Une erreur est survenue');
+        toast.error('Une erreur est survenue');
       }
     } finally {
       setIsLoading(false);
@@ -39,17 +45,17 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#f7f7f7] to-[#7d7d7d] flex items-center justify-center p-8">
-      {/* Logo S360° - Orange */}
-      <div className="absolute top-8 left-8">
-        <div className="text-6xl font-bold" style={{ color: '#FF6B35' }}>
-          S360°
-        </div>
-      </div>
-
       {/* Container principal */}
       <div className="w-full max-w-6xl flex items-center gap-16">
         {/* Formulaire de connexion - Gauche */}
         <div className="flex-1 flex flex-col gap-8">
+          {/* Logo S360° - Orange */}
+          <div className="max-w-md">
+            <div className="text-6xl font-bold mb-8" style={{ color: '#FF6B35' }}>
+              S360°
+            </div>
+          </div>
+
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Message d'erreur */}
             {error && (
@@ -69,6 +75,12 @@ export default function LoginPage() {
                 placeholder="Email"
                 required
                 disabled={isLoading}
+                onInvalid={(e) => {
+                  e.currentTarget.setCustomValidity('Veuillez remplir ce champ.');
+                }}
+                onInput={(e) => {
+                  e.currentTarget.setCustomValidity('');
+                }}
               />
             </div>
 
@@ -83,6 +95,12 @@ export default function LoginPage() {
                 placeholder="Mot de passe"
                 required
                 disabled={isLoading}
+                onInvalid={(e) => {
+                  e.currentTarget.setCustomValidity('Veuillez remplir ce champ.');
+                }}
+                onInput={(e) => {
+                  e.currentTarget.setCustomValidity('');
+                }}
               />
             </div>
 
