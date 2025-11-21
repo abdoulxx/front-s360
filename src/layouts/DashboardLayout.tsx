@@ -3,6 +3,7 @@ import { Sidebar } from '@/components/layout/Sidebar';
 import { Header } from '@/components/layout/Header';
 import { SidebarProvider, useSidebar } from '@/contexts/SidebarContext';
 import { cn } from '@/lib/utils';
+import { Home, LayoutGrid } from 'lucide-react';
 
 function DashboardContent() {
   const location = useLocation();
@@ -13,6 +14,13 @@ function DashboardContent() {
     if (location.pathname === '/dashboard') return 'Accueil';
     if (location.pathname === '/dashboard/controle') return 'Contrôle S360°';
     return 'Dashboard';
+  };
+
+  // Determine icon based on route
+  const getIcon = () => {
+    if (location.pathname === '/dashboard') return <Home className="w-6 h-6 text-black" />;
+    if (location.pathname === '/dashboard/controle') return <LayoutGrid className="w-6 h-6 text-black" />;
+    return <Home className="w-6 h-6 text-black" />;
   };
 
   return (
@@ -28,7 +36,7 @@ function DashboardContent() {
         )}
       >
         {/* Header */}
-        <Header title={getTitle()} />
+        <Header title={getTitle()} icon={getIcon()} />
 
         {/* Page Content */}
         <main className="flex-1 p-8">

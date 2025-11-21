@@ -147,64 +147,64 @@ export default function ControleS360Page() {
       <div className="bg-white rounded-lg overflow-hidden border border-gray-200 flex flex-col row-start-2 col-start-2">
           <Tabs defaultValue="fdi-general" className="w-full">
             <div className="overflow-x-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-[#6B63C5]/30 [&::-webkit-scrollbar-thumb]:bg-[#5B55B0] [&::-webkit-scrollbar-thumb]:rounded-full">
-              <TabsList className="w-max justify-start bg-[#6B63C5] rounded-none h-auto p-0 inline-flex">
+              <TabsList className="w-max justify-start bg-[#6B63C5] rounded-none h-auto p-0 inline-flex gap-1 px-2 pt-2">
               <TabsTrigger
                 value="fdi-general"
-                className="data-[state=active]:bg-white data-[state=active]:text-black text-white rounded-none px-6 py-3"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
               >
                 FDI GENERAL
               </TabsTrigger>
               <TabsTrigger
                 value="fdi-article"
-                className="data-[state=active]:bg-white data-[state=active]:text-black text-white rounded-none px-6 py-3"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
               >
                 FDI ARTICLE
               </TabsTrigger>
               <TabsTrigger
                 value="rfcv-general"
-                className="data-[state=active]:bg-white data-[state=active]:text-black text-white rounded-none px-6 py-3"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
               >
                 RFCV GENERAL
               </TabsTrigger>
               <TabsTrigger
                 value="rfcv-article"
-                className="data-[state=active]:bg-white data-[state=active]:text-black text-white rounded-none px-6 py-3"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
               >
                 RFCV ARTICLE
               </TabsTrigger>
               <TabsTrigger
                 value="manifeste-general"
-                className="data-[state=active]:bg-white data-[state=active]:text-black text-white rounded-none px-6 py-3"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
               >
                 MANIFESTE GENERAL
               </TabsTrigger>
               <TabsTrigger
                 value="manifeste-tt"
-                className="data-[state=active]:bg-white data-[state=active]:text-black text-white rounded-none px-6 py-3"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
               >
                 MANIFESTE TT
               </TabsTrigger>
               <TabsTrigger
                 value="manifeste-tc"
-                className="data-[state=active]:bg-white data-[state=active]:text-black text-white rounded-none px-6 py-3"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
               >
                 MANIFESTE TC
               </TabsTrigger>
               <TabsTrigger
                 value="declaration-general"
-                className="data-[state=active]:bg-white data-[state=active]:text-black text-white rounded-none px-6 py-3"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
               >
                 DECLARATION GENERAL
               </TabsTrigger>
               <TabsTrigger
                 value="declaration-article"
-                className="data-[state=active]:bg-white data-[state=active]:text-black text-white rounded-none px-6 py-3"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
               >
                 DECLARATION ARTICLE
               </TabsTrigger>
               <TabsTrigger
                 value="declaration-conteneur"
-                className="data-[state=active]:bg-white data-[state=active]:text-black text-white rounded-none px-6 py-3"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
               >
                 DECLARATION CONTENEUR
               </TabsTrigger>
