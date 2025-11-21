@@ -15,11 +15,12 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [hasUserTyped, setHasUserTyped] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
     setIsLoading(true);
+    setHasUserTyped(false);
 
     try {
       await login({ email, password });
@@ -30,13 +31,10 @@ export default function LoginPage() {
         const apiError = err.response?.data as ApiError;
         const errorMessage = apiError?.message || 'Erreur de connexion';
         setError(errorMessage);
-        toast.error(errorMessage);
       } else if (err instanceof Error) {
         setError(err.message);
-        toast.error(err.message);
       } else {
         setError('Une erreur est survenue');
-        toast.error('Une erreur est survenue');
       }
     } finally {
       setIsLoading(false);
@@ -58,7 +56,7 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Message d'erreur */}
-            {error && (
+            {error && !hasUserTyped && (
               <div className="max-w-md p-3 bg-red-100 border border-red-400 text-red-700 rounded">
                 {error}
               </div>
@@ -70,7 +68,10 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setHasUserTyped(true);
+                }}
                 className="w-full bg-transparent border-0 border-b border-gray-500 rounded-none focus-visible:ring-0 focus-visible:border-gray-800 px-0 pb-2 text-gray-800 placeholder:text-gray-500"
                 placeholder="Email"
                 required
@@ -90,7 +91,10 @@ export default function LoginPage() {
                 id="password"
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setHasUserTyped(true);
+                }}
                 className="w-full bg-transparent border-0 border-b border-gray-500 rounded-none focus-visible:ring-0 focus-visible:border-gray-800 px-0 pb-2 text-gray-800 placeholder:text-gray-500"
                 placeholder="Mot de passe"
                 required

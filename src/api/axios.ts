@@ -33,7 +33,9 @@ api.interceptors.response.use(
     // Handle 401 Unauthorized - clear auth and redirect to login
     if (error.response?.status === 401) {
       storage.clearAuth();
-      window.location.href = '/login';
+      if (!window.location.pathname.includes('/login')) {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }
