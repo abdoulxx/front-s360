@@ -4,6 +4,7 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { AuthGuard, GuestGuard } from '@/components/guards';
 import LoginPage from '@/pages/LoginPage';
 import DashboardPage from '@/pages/DashboardPage';
+import ControleS360Page from '@/pages/ControleS360Page';
 import DashboardLayout from '@/layouts/DashboardLayout';
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
             }
           >
             <Route index element={<DashboardPage />} />
+            <Route path="controle" element={<ControleS360Page />} />
           </Route>
 
           {/* Redirect root to dashboard (will redirect to login if not auth) */}

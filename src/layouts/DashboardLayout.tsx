@@ -11,6 +11,7 @@ function DashboardContent() {
   // Determine title based on route
   const getTitle = () => {
     if (location.pathname === '/dashboard') return 'Accueil';
+    if (location.pathname === '/dashboard/controle') return 'Contrôle S360°';
     return 'Dashboard';
   };
 
