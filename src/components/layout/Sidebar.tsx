@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useSidebar } from '@/contexts/SidebarContext';
+import { COLORS } from '@/config/colors';
 
 // Menu items configuration
 const menuItems = [
@@ -68,20 +69,25 @@ export function Sidebar() {
   return (
     <div
       className={cn(
-        'flex flex-col h-screen bg-[#3D3E54] text-white fixed left-0 top-0 transition-all duration-300',
+        'flex flex-col h-screen text-white fixed left-0 top-0 transition-all duration-300',
         isCollapsed ? 'w-[80px]' : 'w-[240px]'
       )}
+      style={{ backgroundColor: COLORS.sidebar.background }}
     >
       {/* Logo and Toggle Button */}
       <div className="p-6 pb-8 flex items-center justify-center gap-3">
         {!isCollapsed && (
-          <div className="text-3xl font-bold" style={{ color: '#FF6B35' }}>
+          <div className="text-3xl font-bold" style={{ color: COLORS.sidebar.logo }}>
             S360°
           </div>
         )}
         <button
           onClick={toggleSidebar}
-          className="bg-[#FF6B35] text-white rounded-full p-1.5 hover:bg-[#e55a2a] transition-colors flex-shrink-0"
+          className="rounded-full p-1.5 hover:opacity-90 transition-opacity flex-shrink-0"
+          style={{
+            backgroundColor: COLORS.sidebar.collapseButton,
+            color: COLORS.sidebar.collapseButtonIcon
+          }}
         >
           {isCollapsed ? (
             <ChevronRight className="w-5 h-5" />
@@ -92,7 +98,7 @@ export function Sidebar() {
       </div>
 
       {/* Separator */}
-      <div className="w-full h-px bg-[#4A4B61] mb-4" />
+      <div className="w-full h-px mb-4" style={{ backgroundColor: COLORS.sidebar.separator }} />
 
       {/* Navigation Menu */}
       <nav className="flex-1 overflow-y-auto px-3">
@@ -107,11 +113,14 @@ export function Sidebar() {
                   to={item.href}
                   className={cn(
                     'flex items-center gap-3 rounded-lg text-sm font-medium transition-colors',
-                    isCollapsed ? 'px-3 py-3 justify-center' : 'px-4 py-3',
-                    isActive
-                      ? 'bg-white text-[#3D3E54]'
-                      : 'text-white hover:bg-[#4A4B61]'
+                    isCollapsed ? 'px-3 py-3 justify-center' : 'px-4 py-3'
                   )}
+                  style={{
+                    backgroundColor: isActive ? COLORS.sidebar.activeBackground : 'transparent',
+                    color: isActive ? COLORS.sidebar.activeText : COLORS.sidebar.text,
+                  }}
+                  onMouseEnter={(e) => !isActive && (e.currentTarget.style.backgroundColor = COLORS.sidebar.hover)}
+                  onMouseLeave={(e) => !isActive && (e.currentTarget.style.backgroundColor = 'transparent')}
                   title={isCollapsed ? item.label : undefined}
                 >
                   <Icon className="w-5 h-5 flex-shrink-0" />
@@ -124,7 +133,7 @@ export function Sidebar() {
       </nav>
 
       {/* Separator before settings */}
-      <div className="w-full h-px bg-[#4A4B61] my-4" />
+      <div className="w-full h-px my-4" style={{ backgroundColor: COLORS.sidebar.separator }} />
 
       {/* Settings at bottom */}
       <div className="px-3 pb-4">
@@ -132,11 +141,14 @@ export function Sidebar() {
           to="/dashboard/settings"
           className={cn(
             'flex items-center gap-3 rounded-lg text-sm font-medium transition-colors',
-            isCollapsed ? 'px-3 py-3 justify-center' : 'px-4 py-3',
-            pathname === '/dashboard/settings'
-              ? 'bg-white text-[#3D3E54]'
-              : 'text-white hover:bg-[#4A4B61]'
+            isCollapsed ? 'px-3 py-3 justify-center' : 'px-4 py-3'
           )}
+          style={{
+            backgroundColor: pathname === '/dashboard/settings' ? COLORS.sidebar.activeBackground : 'transparent',
+            color: pathname === '/dashboard/settings' ? COLORS.sidebar.activeText : COLORS.sidebar.text,
+          }}
+          onMouseEnter={(e) => pathname !== '/dashboard/settings' && (e.currentTarget.style.backgroundColor = COLORS.sidebar.hover)}
+          onMouseLeave={(e) => pathname !== '/dashboard/settings' && (e.currentTarget.style.backgroundColor = 'transparent')}
           title={isCollapsed ? 'Paramètres' : undefined}
         >
           <Settings className="w-5 h-5 flex-shrink-0" />
@@ -150,11 +162,14 @@ export function Sidebar() {
           to="/dashboard/administrateur"
           className={cn(
             'flex items-center gap-3 rounded-lg text-sm font-medium transition-colors',
-            isCollapsed ? 'px-3 py-3 justify-center' : 'px-4 py-3',
-            pathname === '/dashboard/administrateur'
-              ? 'bg-white text-[#3D3E54]'
-              : 'text-white hover:bg-[#4A4B61]'
+            isCollapsed ? 'px-3 py-3 justify-center' : 'px-4 py-3'
           )}
+          style={{
+            backgroundColor: pathname === '/dashboard/administrateur' ? COLORS.sidebar.activeBackground : 'transparent',
+            color: pathname === '/dashboard/administrateur' ? COLORS.sidebar.activeText : COLORS.sidebar.text,
+          }}
+          onMouseEnter={(e) => pathname !== '/dashboard/administrateur' && (e.currentTarget.style.backgroundColor = COLORS.sidebar.hover)}
+          onMouseLeave={(e) => pathname !== '/dashboard/administrateur' && (e.currentTarget.style.backgroundColor = 'transparent')}
           title={isCollapsed ? 'Administrateur' : undefined}
         >
           <User className="w-5 h-5 flex-shrink-0" />

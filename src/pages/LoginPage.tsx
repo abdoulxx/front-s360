@@ -7,6 +7,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { ROUTES } from '@/utils/constants';
 import { AxiosError } from 'axios';
 import type { ApiError } from '@/types';
+import { COLORS } from '@/config/colors';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -112,7 +113,10 @@ export default function LoginPage() {
             <div className="pt-4 flex justify-end max-w-md">
               <Button
                 type="submit"
-                className="bg-[#3D3E54] hover:bg-[#2E2F45] text-white px-12 py-5 rounded-md text-base disabled:opacity-50"
+                className="text-white px-12 py-5 rounded-md text-base disabled:opacity-50"
+                style={{ backgroundColor: COLORS.sidebar.background }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = COLORS.sidebar.hover}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = COLORS.sidebar.background}
                 disabled={isLoading}
               >
                 {isLoading ? 'Connexion...' : 'Se connecter'}

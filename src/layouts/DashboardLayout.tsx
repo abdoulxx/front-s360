@@ -4,6 +4,7 @@ import { Header } from '@/components/layout/Header';
 import { SidebarProvider, useSidebar } from '@/contexts/SidebarContext';
 import { cn } from '@/lib/utils';
 import { Home, LayoutGrid } from 'lucide-react';
+import { COLORS } from '@/config/colors';
 
 function DashboardContent() {
   const location = useLocation();
@@ -18,13 +19,18 @@ function DashboardContent() {
 
   // Determine icon based on route
   const getIcon = () => {
-    if (location.pathname === '/dashboard') return <Home className="w-6 h-6 text-black" />;
-    if (location.pathname === '/dashboard/controle') return <LayoutGrid className="w-6 h-6 text-black" />;
-    return <Home className="w-6 h-6 text-black" />;
+    if (location.pathname === '/dashboard') return <Home className="w-6 h-6" style={{ color: COLORS.sidebar.background }} />;
+    if (location.pathname === '/dashboard/controle') return <LayoutGrid className="w-6 h-6" style={{ color: COLORS.sidebar.background }} />;
+    return <Home className="w-6 h-6" style={{ color: COLORS.sidebar.background }} />;
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#403C6A] to-[#645BD4]">
+    <div
+      className="min-h-screen bg-gradient-to-b"
+      style={{
+        backgroundImage: `linear-gradient(to bottom, ${COLORS.background.gradientFrom}, ${COLORS.background.gradientTo})`
+      }}
+    >
       {/* Sidebar */}
       <Sidebar />
 

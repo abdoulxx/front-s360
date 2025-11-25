@@ -19,11 +19,22 @@ interface DataTableProps {
   data: Record<string, any>[];
   onRowClick?: (row: Record<string, any>) => void;
   selectedRowId?: string | number;
+  headerColor?: string;
+  hoverColor?: string;
+  selectedColor?: string;
 }
 
 type SortDirection = 'asc' | 'desc' | null;
 
-export function DataTable({ columns, data, onRowClick, selectedRowId }: DataTableProps) {
+export function DataTable({
+  columns,
+  data,
+  onRowClick,
+  selectedRowId,
+  headerColor = '#6B63C5',
+  hoverColor = '#6B63C5',
+  selectedColor = '#6B63C5'
+}: DataTableProps) {
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -76,7 +87,7 @@ export function DataTable({ columns, data, onRowClick, selectedRowId }: DataTabl
       <div className="overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="bg-[#6B63C5] text-white">
+            <tr className="text-white" style={{ backgroundColor: headerColor }}>
               {columns.map((column) => (
                 <th
                   key={column.key}
@@ -112,14 +123,31 @@ export function DataTable({ columns, data, onRowClick, selectedRowId }: DataTabl
                   key={row.id || index}
                   onClick={() => onRowClick?.(row)}
                   className={`border-b border-gray-200 transition-colors ${
-                    onRowClick ? 'cursor-pointer hover:bg-[#6B63C5]/10' : ''
+                    onRowClick ? 'cursor-pointer' : ''
                   } ${
                     selectedRowId && row.id === selectedRowId
-                      ? 'bg-[#6B63C5]/20'
+                      ? ''
                       : index % 2 === 0
                       ? 'bg-white'
                       : 'bg-gray-50'
                   }`}
+                  style={{
+                    backgroundColor:
+                      selectedRowId && row.id === selectedRowId
+                        ? `${selectedColor}20`
+                        : undefined,
+                  }}
+                  onMouseEnter={(e) => {
+                    if (onRowClick && !(selectedRowId && row.id === selectedRowId)) {
+                      e.currentTarget.style.backgroundColor = `${hoverColor}10`;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (onRowClick && !(selectedRowId && row.id === selectedRowId)) {
+                      e.currentTarget.style.backgroundColor =
+                        index % 2 === 0 ? '#ffffff' : '#f9fafb';
+                    }
+                  }}
                 >
                   {columns.map((column) => (
                     <td key={column.key} className="px-4 py-3 text-gray-900">

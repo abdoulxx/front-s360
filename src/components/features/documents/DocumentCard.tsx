@@ -16,19 +16,30 @@ export function DocumentCard({
   return (
     <div
       onClick={onClick}
-      className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] h-auto min-h-[194px] rounded-xl p-4 sm:p-6 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg bg-black/35 border border-white/50"
+      className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] h-auto min-h-[194px] rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl overflow-hidden flex"
     >
-      <div className="flex items-start gap-3 sm:gap-4 h-full">
-        <div
-          className="flex-shrink-0 w-[60px] h-[60px] sm:w-[70px] sm:h-[70px] rounded-full flex items-center justify-center"
-          style={{ backgroundColor: iconColor, color: 'white' }}
-        >
-          {icon}
+      {/* Partie gauche colorée avec l'icône */}
+      <div
+        className="w-[140px] flex-shrink-0 flex items-center justify-center"
+        style={{ backgroundColor: iconColor }}
+      >
+        <div className="w-[80px] h-[80px] rounded-full bg-white/20 flex items-center justify-center">
+          <div className="w-[60px] h-[60px] rounded-full bg-white/30 flex items-center justify-center">
+            <div style={{ color: 'white' }}>
+              {icon}
+            </div>
+          </div>
         </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="text-base sm:text-lg font-semibold text-white mb-1 sm:mb-2">{title}</h3>
-          <p className="text-sm sm:text-base text-white/80 leading-relaxed">{description}</p>
-        </div>
+      </div>
+
+      {/* Partie droite blanche avec le texte */}
+      <div className="flex-1 bg-white p-6 flex flex-col justify-center">
+        <h3 className="text-lg font-bold mb-3" style={{ color: iconColor }}>
+          {title}
+        </h3>
+        <p className="text-sm text-gray-700 leading-relaxed">
+          {description}
+        </p>
       </div>
     </div>
   );

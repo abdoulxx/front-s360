@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/hooks/useAuth';
 import { ROUTES } from '@/utils/constants';
+import { COLORS } from '@/config/colors';
 
 interface HeaderProps {
   title?: string;
@@ -34,8 +35,12 @@ export function Header({ title = 'Accueil', icon }: HeaderProps) {
     <header className="h-[100px] bg-white border-b border-gray-200 flex items-center px-8 gap-8">
       {/* Page indicator */}
       <div className="flex-1 flex items-center gap-3">
-        {icon || <Home className="w-6 h-6 text-black" />}
-        <h1 className="text-2xl font-semibold text-gray-800">{title}</h1>
+        <div style={{ color: COLORS.sidebar.background }}>
+          {icon || <Home className="w-6 h-6" />}
+        </div>
+        <h1 className="text-2xl font-semibold" style={{ color: COLORS.sidebar.background }}>
+          {title}
+        </h1>
       </div>
 
       {/* User Profile */}

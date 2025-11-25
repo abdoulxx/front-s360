@@ -15,6 +15,7 @@ import { NodeDetailsModal } from '@/components/flow/NodeDetailsModal';
 import { DataTable } from '@/components/table/DataTable';
 import type { Column } from '@/components/table/DataTable';
 import type { FlowDiagramData, FlowNodeData } from '@/types/flow.types';
+import { COLORS } from '@/config/colors';
 
 // Colonnes pour FDI GENERAL
 const FDI_GENERAL_COLUMNS: Column[] = [
@@ -324,8 +325,14 @@ export default function ControleS360Page() {
   return (
     <div className="grid grid-cols-[350px_1fr] grid-rows-[auto_1fr] gap-6 h-full overflow-x-hidden">
       {/* Recherche simple - Row 1, Col 1 */}
-      <div className="bg-[#6B63C5] rounded-lg overflow-hidden flex flex-col row-start-1">
-          <div className="bg-[#5B55B0] px-6 py-4">
+      <div
+        className="rounded-lg overflow-hidden flex flex-col row-start-1"
+        style={{ backgroundColor: COLORS.controle.searchCard }}
+      >
+          <div
+            className="px-6 py-4"
+            style={{ backgroundColor: COLORS.controle.searchCard }}
+          >
             <h2 className="text-white font-semibold text-lg">RECHERCHE AVANCEE</h2>
           </div>
           <div className="bg-white p-6 space-y-6">
@@ -333,15 +340,42 @@ export default function ControleS360Page() {
             <div className="space-y-2">
               <label className="font-semibold text-gray-900">Options</label>
               <Select value={selectedOption} onValueChange={setSelectedOption}>
-                <SelectTrigger className="w-full">
+                <SelectTrigger
+                  className="w-full focus-visible:ring-[#049B04]/50 focus-visible:border-[#049B04]"
+                >
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="fdi">FDI</SelectItem>
-                  <SelectItem value="rfcv">RFCV</SelectItem>
-                  <SelectItem value="declaration">Declaration</SelectItem>
-                  <SelectItem value="manifeste TT">Manifeste TT</SelectItem>
-                  <SelectItem value="AC">AC</SelectItem>
+                  <SelectItem
+                    value="fdi"
+                    className="focus:bg-[#049B04]/10 focus:text-[#049B04] data-[state=checked]:bg-[#049B04]/20"
+                  >
+                    FDI
+                  </SelectItem>
+                  <SelectItem
+                    value="rfcv"
+                    className="focus:bg-[#049B04]/10 focus:text-[#049B04] data-[state=checked]:bg-[#049B04]/20"
+                  >
+                    RFCV
+                  </SelectItem>
+                  <SelectItem
+                    value="declaration"
+                    className="focus:bg-[#049B04]/10 focus:text-[#049B04] data-[state=checked]:bg-[#049B04]/20"
+                  >
+                    Declaration
+                  </SelectItem>
+                  <SelectItem
+                    value="manifeste TT"
+                    className="focus:bg-[#049B04]/10 focus:text-[#049B04] data-[state=checked]:bg-[#049B04]/20"
+                  >
+                    Manifeste TT
+                  </SelectItem>
+                  <SelectItem
+                    value="AC"
+                    className="focus:bg-[#049B04]/10 focus:text-[#049B04] data-[state=checked]:bg-[#049B04]/20"
+                  >
+                    AC
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -354,7 +388,7 @@ export default function ControleS360Page() {
                 placeholder="Entrer valeur..."
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
-                className="w-full"
+                className="w-full focus-visible:ring-[#049B04]/50 focus-visible:border-[#049B04]"
               />
             </div>
 
@@ -364,14 +398,27 @@ export default function ControleS360Page() {
                 type="button"
                 variant="outline"
                 onClick={handleReset}
-                className="flex-1"
+                className="flex-1 border-gray-300"
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = COLORS.controle.searchButton;
+                  e.currentTarget.style.borderColor = COLORS.controle.searchButton;
+                  e.currentTarget.style.color = 'white';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.borderColor = '#d1d5db';
+                  e.currentTarget.style.color = 'black';
+                }}
               >
                 Reset
               </Button>
               <Button
                 type="button"
                 onClick={handleSearch}
-                className="flex-1 bg-[#6B63C5] hover:bg-[#5B55B0] text-white"
+                className="flex-1 text-white"
+                style={{ backgroundColor: COLORS.controle.searchButton }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = COLORS.controle.searchButtonHover}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = COLORS.controle.searchButton}
               >
                 <Search className="w-4 h-4 mr-2" />
                 Recherche
@@ -381,14 +428,17 @@ export default function ControleS360Page() {
         </div>
 
       {/* Carte info du haut / Diagramme - Row 1, Col 2 */}
-      <div className="bg-gray-200 rounded-lg overflow-hidden row-start-1 col-start-2">
+      <div className="bg-white rounded-lg overflow-hidden row-start-1 col-start-2 border border-gray-200">
         {flowData ? (
           <div className="w-full h-full min-h-[300px]">
             <FlowDiagram data={flowData} onNodeClick={handleNodeClick} />
           </div>
         ) : (
           <div className="p-12 flex flex-col items-center justify-center text-center h-full">
-            <div className="w-20 h-20 bg-[#6B63C5] rounded-full flex items-center justify-center mb-6">
+            <div
+              className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+              style={{ backgroundColor: COLORS.controle.emptyStateIcon }}
+            >
               <Network className="w-10 h-10 text-white" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -409,8 +459,14 @@ export default function ControleS360Page() {
       />
 
       {/* Recherche avancée (deuxième carte) - Row 2, Col 1 */}
-      <div className="bg-[#6B63C5] rounded-lg overflow-hidden flex flex-col row-start-2 col-start-1 self-start">
-        <div className="bg-[#5B55B0] px-6 py-4">
+      <div
+        className="rounded-lg overflow-hidden flex flex-col row-start-2 col-start-1 self-start"
+        style={{ backgroundColor: COLORS.controle.searchCard }}
+      >
+        <div
+          className="px-6 py-4"
+          style={{ backgroundColor: COLORS.controle.searchCard }}
+        >
           <h2 className="text-white font-semibold text-lg">RECHERCHE AVANCEE</h2>
         </div>
         <div className="bg-white p-6 space-y-6">
@@ -418,16 +474,48 @@ export default function ControleS360Page() {
           <div className="space-y-2">
               <label className="font-semibold text-gray-900">Options</label>
               <Select value={selectedOption2} onValueChange={setSelectedOption2}>
-                <SelectTrigger className="w-full">
+                <SelectTrigger
+                  className="w-full focus-visible:ring-[#049B04]/50 focus-visible:border-[#049B04]"
+                >
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Importateur">Importateur</SelectItem>
-                  <SelectItem value="manifeste">Manifeste</SelectItem>
-                  <SelectItem value="annee">ANNEE</SelectItem>
-                  <SelectItem value="Declarant">Declarant</SelectItem>
-                  <SelectItem value="BUREAU DE PORT">Bureau de port</SelectItem>
-                  <SelectItem value="PAYS EXPORTATEUR">Pays exportateur</SelectItem>
+                  <SelectItem
+                    value="Importateur"
+                    className="focus:bg-[#049B04]/10 focus:text-[#049B04] data-[state=checked]:bg-[#049B04]/20"
+                  >
+                    Importateur
+                  </SelectItem>
+                  <SelectItem
+                    value="manifeste"
+                    className="focus:bg-[#049B04]/10 focus:text-[#049B04] data-[state=checked]:bg-[#049B04]/20"
+                  >
+                    Manifeste
+                  </SelectItem>
+                  <SelectItem
+                    value="annee"
+                    className="focus:bg-[#049B04]/10 focus:text-[#049B04] data-[state=checked]:bg-[#049B04]/20"
+                  >
+                    ANNEE
+                  </SelectItem>
+                  <SelectItem
+                    value="Declarant"
+                    className="focus:bg-[#049B04]/10 focus:text-[#049B04] data-[state=checked]:bg-[#049B04]/20"
+                  >
+                    Declarant
+                  </SelectItem>
+                  <SelectItem
+                    value="BUREAU DE PORT"
+                    className="focus:bg-[#049B04]/10 focus:text-[#049B04] data-[state=checked]:bg-[#049B04]/20"
+                  >
+                    Bureau de port
+                  </SelectItem>
+                  <SelectItem
+                    value="PAYS EXPORTATEUR"
+                    className="focus:bg-[#049B04]/10 focus:text-[#049B04] data-[state=checked]:bg-[#049B04]/20"
+                  >
+                    Pays exportateur
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -440,7 +528,7 @@ export default function ControleS360Page() {
                 placeholder="Entrer valeur..."
                 value={searchValue2}
                 onChange={(e) => setSearchValue2(e.target.value)}
-                className="w-full"
+                className="w-full focus-visible:ring-[#049B04]/50 focus-visible:border-[#049B04]"
               />
             </div>
 
@@ -450,14 +538,27 @@ export default function ControleS360Page() {
                 type="button"
                 variant="outline"
                 onClick={handleReset2}
-                className="flex-1"
+                className="flex-1 border-gray-300"
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = COLORS.controle.searchButton;
+                  e.currentTarget.style.borderColor = COLORS.controle.searchButton;
+                  e.currentTarget.style.color = 'white';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.borderColor = '#d1d5db';
+                  e.currentTarget.style.color = 'black';
+                }}
               >
                 Reset
               </Button>
               <Button
                 type="button"
                 onClick={handleSearch2}
-                className="flex-1 bg-[#6B63C5] hover:bg-[#5B55B0] text-white"
+                className="flex-1 text-white"
+                style={{ backgroundColor: COLORS.controle.searchButton }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = COLORS.controle.searchButtonHover}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = COLORS.controle.searchButton}
               >
                 <Search className="w-4 h-4 mr-2" />
                 Recherche
@@ -469,65 +570,114 @@ export default function ControleS360Page() {
       {/* Tabs avec résultats - Row 2, Col 2 */}
       <div className="bg-white rounded-lg overflow-hidden border border-gray-200 flex flex-col row-start-2 col-start-2">
           <Tabs defaultValue="fdi-general" className="w-full">
-            <div className="overflow-x-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-[#6B63C5]/30 [&::-webkit-scrollbar-thumb]:bg-[#5B55B0] [&::-webkit-scrollbar-thumb]:rounded-full">
-              <TabsList className="w-max justify-start bg-[#6B63C5] rounded-none h-auto p-0 inline-flex gap-1 px-2 pt-2">
+            <div
+              className="overflow-x-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full"
+              style={{
+                scrollbarTrackColor: `${COLORS.controle.tabsBackground}30`,
+                scrollbarColor: `${COLORS.controle.tabsBackground} ${COLORS.controle.tabsBackground}30`
+              }}
+            >
+              <TabsList
+                className="w-max justify-start rounded-none h-auto p-0 inline-flex gap-1 px-2 pt-2"
+                style={{ backgroundColor: COLORS.controle.tabsBackground }}
+              >
               <TabsTrigger
                 value="fdi-general"
-                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                style={{
+                  backgroundColor: undefined,
+                }}
+                data-inactive-bg={COLORS.controle.tabInactive}
               >
                 FDI GENERAL
               </TabsTrigger>
               <TabsTrigger
                 value="fdi-article"
-                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                style={{
+                  backgroundColor: undefined,
+                }}
+                data-inactive-bg={COLORS.controle.tabInactive}
               >
                 FDI ARTICLE
               </TabsTrigger>
               <TabsTrigger
                 value="rfcv-general"
-                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                style={{
+                  backgroundColor: undefined,
+                }}
+                data-inactive-bg={COLORS.controle.tabInactive}
               >
                 RFCV GENERAL
               </TabsTrigger>
               <TabsTrigger
                 value="rfcv-article"
-                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                style={{
+                  backgroundColor: undefined,
+                }}
+                data-inactive-bg={COLORS.controle.tabInactive}
               >
                 RFCV ARTICLE
               </TabsTrigger>
               <TabsTrigger
                 value="manifeste-general"
-                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                style={{
+                  backgroundColor: undefined,
+                }}
+                data-inactive-bg={COLORS.controle.tabInactive}
               >
                 MANIFESTE GENERAL
               </TabsTrigger>
               <TabsTrigger
                 value="manifeste-tt"
-                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                style={{
+                  backgroundColor: undefined,
+                }}
+                data-inactive-bg={COLORS.controle.tabInactive}
               >
                 MANIFESTE TT
               </TabsTrigger>
               <TabsTrigger
                 value="manifeste-tc"
-                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                style={{
+                  backgroundColor: undefined,
+                }}
+                data-inactive-bg={COLORS.controle.tabInactive}
               >
                 MANIFESTE TC
               </TabsTrigger>
               <TabsTrigger
                 value="declaration-general"
-                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                style={{
+                  backgroundColor: undefined,
+                }}
+                data-inactive-bg={COLORS.controle.tabInactive}
               >
                 DECLARATION GENERAL
               </TabsTrigger>
               <TabsTrigger
                 value="declaration-article"
-                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                style={{
+                  backgroundColor: undefined,
+                }}
+                data-inactive-bg={COLORS.controle.tabInactive}
               >
                 DECLARATION ARTICLE
               </TabsTrigger>
               <TabsTrigger
                 value="declaration-conteneur"
-                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 data-[state=inactive]:bg-[#6B63C5]/70 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-t data-[state=active]:border-x data-[state=active]:border-gray-300 text-white rounded-t-lg px-6 py-3 border-b-0 relative data-[state=active]:shadow-sm"
+                style={{
+                  backgroundColor: undefined,
+                }}
+                data-inactive-bg={COLORS.controle.tabInactive}
               >
                 DECLARATION CONTENEUR
               </TabsTrigger>
@@ -541,10 +691,16 @@ export default function ControleS360Page() {
                   data={tableData}
                   onRowClick={handleRowClick}
                   selectedRowId={selectedRowId}
+                  headerColor={COLORS.controle.tableHeader}
+                  hoverColor={COLORS.controle.tableHeader}
+                  selectedColor={COLORS.controle.tableHeader}
                 />
               ) : (
                 <div className="flex flex-col items-center justify-center text-center min-h-[400px]">
-                  <div className="w-20 h-20 bg-[#6B63C5] rounded-full flex items-center justify-center mb-6">
+                  <div
+                    className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+                    style={{ backgroundColor: COLORS.controle.emptyStateIcon }}
+                  >
                     <Network className="w-10 h-10 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -559,7 +715,10 @@ export default function ControleS360Page() {
 
             <TabsContent value="fdi-article" className="p-12">
               <div className="flex flex-col items-center justify-center text-center min-h-[400px]">
-                <div className="w-20 h-20 bg-[#6B63C5] rounded-full flex items-center justify-center mb-6">
+                <div
+                  className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+                  style={{ backgroundColor: COLORS.controle.emptyStateIcon }}
+                >
                   <Network className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -573,7 +732,10 @@ export default function ControleS360Page() {
 
             <TabsContent value="rfcv-general" className="p-12">
               <div className="flex flex-col items-center justify-center text-center min-h-[400px]">
-                <div className="w-20 h-20 bg-[#6B63C5] rounded-full flex items-center justify-center mb-6">
+                <div
+                  className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+                  style={{ backgroundColor: COLORS.controle.emptyStateIcon }}
+                >
                   <Network className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -587,7 +749,10 @@ export default function ControleS360Page() {
 
             <TabsContent value="rfcv-article" className="p-12">
               <div className="flex flex-col items-center justify-center text-center min-h-[400px]">
-                <div className="w-20 h-20 bg-[#6B63C5] rounded-full flex items-center justify-center mb-6">
+                <div
+                  className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+                  style={{ backgroundColor: COLORS.controle.emptyStateIcon }}
+                >
                   <Network className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -601,7 +766,10 @@ export default function ControleS360Page() {
 
             <TabsContent value="manifeste-general" className="p-12">
               <div className="flex flex-col items-center justify-center text-center min-h-[400px]">
-                <div className="w-20 h-20 bg-[#6B63C5] rounded-full flex items-center justify-center mb-6">
+                <div
+                  className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+                  style={{ backgroundColor: COLORS.controle.emptyStateIcon }}
+                >
                   <Network className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -615,7 +783,10 @@ export default function ControleS360Page() {
 
             <TabsContent value="manifeste-tt" className="p-12">
               <div className="flex flex-col items-center justify-center text-center min-h-[400px]">
-                <div className="w-20 h-20 bg-[#6B63C5] rounded-full flex items-center justify-center mb-6">
+                <div
+                  className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+                  style={{ backgroundColor: COLORS.controle.emptyStateIcon }}
+                >
                   <Network className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -629,7 +800,10 @@ export default function ControleS360Page() {
 
             <TabsContent value="manifeste-tc" className="p-12">
               <div className="flex flex-col items-center justify-center text-center min-h-[400px]">
-                <div className="w-20 h-20 bg-[#6B63C5] rounded-full flex items-center justify-center mb-6">
+                <div
+                  className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+                  style={{ backgroundColor: COLORS.controle.emptyStateIcon }}
+                >
                   <Network className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -643,7 +817,10 @@ export default function ControleS360Page() {
 
             <TabsContent value="declaration-general" className="p-12">
               <div className="flex flex-col items-center justify-center text-center min-h-[400px]">
-                <div className="w-20 h-20 bg-[#6B63C5] rounded-full flex items-center justify-center mb-6">
+                <div
+                  className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+                  style={{ backgroundColor: COLORS.controle.emptyStateIcon }}
+                >
                   <Network className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -657,7 +834,10 @@ export default function ControleS360Page() {
 
             <TabsContent value="declaration-article" className="p-12">
               <div className="flex flex-col items-center justify-center text-center min-h-[400px]">
-                <div className="w-20 h-20 bg-[#6B63C5] rounded-full flex items-center justify-center mb-6">
+                <div
+                  className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+                  style={{ backgroundColor: COLORS.controle.emptyStateIcon }}
+                >
                   <Network className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -671,7 +851,10 @@ export default function ControleS360Page() {
 
             <TabsContent value="declaration-conteneur" className="p-12">
               <div className="flex flex-col items-center justify-center text-center min-h-[400px]">
-                <div className="w-20 h-20 bg-[#6B63C5] rounded-full flex items-center justify-center mb-6">
+                <div
+                  className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+                  style={{ backgroundColor: COLORS.controle.emptyStateIcon }}
+                >
                   <Network className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
